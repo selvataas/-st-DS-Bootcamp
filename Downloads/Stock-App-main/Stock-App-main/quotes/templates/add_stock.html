@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Add Stock...</h1>
+<div class="p-2 my-2 bg-warning bg-opacity-25 rounded-3">
+  <div class="container-fluid py-2">
+    <!-- _________________input section_________________________ -->
+    <form action="{% url 'add_stock' %}" class="form-inline w-75 d-flex" method="POST">
+
+      {% csrf_token %}
+      <input class="form-control me-2" type="search" placeholder="i.e. AAPL" aria-label="Search" name="ticker">
+      <button class="btn btn-outline-secondary btn-sm w-25" type="submit">Add Stock</button>
+
+    </form>
+    <!-- __________________END input section________________________ -->
+  </div>
+  <div class="text-center my-2"><a class="btn btn-primary btn-lg" type="button" href="{% url 'home' %}">Cancel</a></div>
+</div>
+<br />
+{% if ticker %}
+<table class="table table-bordered">
+  <!-- <caption style="text-align:center;font-size:larger;caption-side: top;"><strong>A list of Things I need to do.</strong></caption> -->
+  <thead>
+    <tr class="bg-info bg-gradient">
+      <th scope="col" style="text-align: center; vertical-align: text-top;">Name</th>
+      <th scope="col" style="text-align: center; vertical-align: text-top;">Price</th>
+      <th scope="col" style="text-align: center; vertical-align: text-top;">Previous Close</th>
+      <th scope="col" style="text-align: center; vertical-align: text-top;">Market Cap</th>
+      <th scope="col" style="text-align: center; vertical-align: text-top;">YTD Change</th>
+      <th scope="col" style="text-align: center; vertical-align: text-top;">52 Week High</th>
+      <th scope="col" style="text-align: center; vertical-align: text-top;">52 Week Low</th>
+    </tr>
+  </thead>
+
+{% for item in output %}
+<tbody>
+  <tr>
+    <th scopr="row" class="text-center"><strong>{{ item.companyName }}</strong></th>
+    <td class="text-center"><strong>${{ item.latestPrice }}</strong></td>
+    <td class="text-center"><strong>${{ item.previousClose }}</strong></td>
+    <td class="text-center"><strong>{{ item.marketCap }}</strong></td>
+    <td class="text-center"><strong>{{ item.ytdChange }}</strong></td>
+    <td class="text-center"><strong>${{ item.week52High }}</strong></td>
+    <td class="text-center"><strong>${{ item.week52Low }}</strong></td>
+  </tr>
+</tbody>
+{% endfor %}
+
+</table>
+{% endif %}
+{% endblock %}

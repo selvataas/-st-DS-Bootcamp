@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Delete Stock</h1>
+<div class="p-2 my-2 bg-warning bg-opacity-25 rounded-3">
+  <div class="container-fluid py-2">
+    {% if ticker %}
+      {% for item in ticker %}
+        {{ item }} | <a href="{% url 'delete' item.id %}">Delete Stock</a><br />
+      {% endfor %}
+    {% else %}
+      <p>You Don't Have any stocks...</p>
+    {% endif %}
+  </div>
+  <div class="text-center my-2"><a class="btn btn-primary btn-lg" type="button" href="{% url 'home' %}">Cancel</a></div>
+</div>
+<br />
+
+
+{% endblock %}
